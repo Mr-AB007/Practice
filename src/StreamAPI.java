@@ -72,14 +72,22 @@ public class StreamAPI {
                 .toList();
 
         //using indexOf
+        // appears more than once
         Set<Integer> duplicates2 = numbers2.stream()
-                .filter(n -> numbers2.indexOf(n) != numbers2.lastIndexOf(n)) // appears more than once
-                .distinct()
-                .collect(Collectors.toSet());
-        System.out.println(duplicates2);
+                .filter(n -> numbers2.indexOf(n) != numbers2.lastIndexOf(n))
+                .collect(Collectors.toSet());    //output: [1,2]
+
 
         /**
-         * To-do
+         * Given a list of strings, write a program to count the number of strings containing a specific character ‘a’
          */
+        List<String> strs = Arrays.asList("apple", "banana", "orange", "grape");
+        char searchChar = 'a';
+        long count = strs.stream().filter(s-> s.contains(String.valueOf(searchChar)))
+                .count();            //Output: 4
+
+        System.out.println(count);
+
+
     }
 }
