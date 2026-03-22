@@ -77,7 +77,8 @@ public class NewStreamApi {
         // if you dont want return Optional and Directly get name
         Map<String,String> hihgEmpoyeByDep = employees.stream()
                         .collect(Collectors.groupingBy(
-                                Employee::getDepartment,Collectors.collectingAndThen(
+                                Employee::getDepartment
+                                ,Collectors.collectingAndThen(
                                         Collectors.maxBy(Comparator.comparingInt(Employee::getSalary))
                                         , opt -> opt.map(Employee::getName).orElse("NO Result Error")
                                         )
