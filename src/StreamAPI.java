@@ -86,7 +86,12 @@ public class StreamAPI {
         long count = strs.stream().filter(s-> s.contains(String.valueOf(searchChar)))
                 .count();            //Output: 4
 
-        System.out.println(count);
+        /**
+         * Find sum and product of a integer list
+        */
+        List<Integer> nums = List.of(1, 2, 3, 4, 5);
+        sum = nums.stream().mapToInt(Integer::intValue).sum();  //Output : 15
+        int prodcut = nums.stream().reduce(1,(a,b)->a*b); //Output : 120
 
 
     }
