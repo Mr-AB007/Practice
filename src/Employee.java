@@ -1,41 +1,23 @@
+import java.util.List;
+
 class Employee {
+    private String name;
+    private int salary;
+    private int age;
+    private String department;
+    private List<String> skills;
 
-
-    String name;
-    int salary;
-    int age;
-    String department;
-
-    Employee(String name, int salary, int age, String department) {
+    public Employee(String name, int salary, int age, String department, List<String> skills) {
         this.name = name;
         this.salary = salary;
         this.age = age;
         this.department = department;
-    }
-    public String getName() {
-        return name;
+        this.skills = skills;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-    public String getDepartment() {
-        return department;
-    }
+    public String getName() { return name; }
+    public int getSalary() { return salary; }
+    public int getAge() { return age; }
+    public String getDepartment() { return department; }
+    public List<String> getSkills() { return skills; }
 }

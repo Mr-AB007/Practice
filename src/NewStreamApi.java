@@ -23,13 +23,26 @@ public class NewStreamApi {
         List<Integer> uniqueSorted = nums.stream().distinct().sorted().toList();
 
         List<Employee> employees = Arrays.asList(
-                new Employee("Amit", 120000, 25, "IT"),
-                new Employee("Riya", 90000, 22, "HR"),
-                new Employee("John", 105000, 17, "IT"),     // age < 18
-                new Employee("Sara", 70000, 30, "Finance"),
-                new Employee("Raj", 100000, 18, "IT"),      // boundary case
-                new Employee("Neha", 130000, 28, "HR")
+                new Employee("Amit", 120000, 25, "IT",
+                        Arrays.asList("Java", "Spring", "AWS")),
+
+                new Employee("Riya", 90000, 22, "HR",
+                        Arrays.asList("Communication", "Recruitment", "Excel")),
+
+                new Employee("John", 105000, 28, "IT",
+                        Arrays.asList("Java", "Microservices", "Docker")),
+
+                new Employee("Sara", 70000, 30, "Finance",
+                        Arrays.asList("Excel", "Accounting", "Taxation")),
+
+                new Employee("Raj", 100000, 18, "IT",
+                        Arrays.asList("Java", "Spring", "Docker")),
+
+                new Employee("Neha", 130000, 28, "HR",
+                        Arrays.asList("Recruitment", "Management", "Excel"))
+
         );
+
 
         //Q5. Check if any employee earns more than 100k, and if all employees are older than 18.
 
@@ -49,7 +62,7 @@ public class NewStreamApi {
 
         //Q8. Find the top 3 highest-paid employees and return only their names.
 
-        List<String> highestPaid = employees.stream().sorted((e ,e1) -> e1.salary - e.salary)
+        List<String> highestPaid = employees.stream().sorted((e ,e1) -> e1.getSalary() - e.getSalary())
                                                         .limit(3).map(Employee::getName).toList();
         //coding best practice approach
         highestPaid = employees.stream().sorted(Comparator.comparingInt(Employee::getSalary).reversed())
@@ -83,6 +96,49 @@ public class NewStreamApi {
                                         , opt -> opt.map(Employee::getName).orElse("NO Result Error")
                                         )
                                 ));
-        System.out.println(hihgEmpoyeByDep);
+
+        //Q11. Extract all unique skills from a list of employees where each employee has a List of skills.
+
+        List<String> uniqueSkill = employees.stream()
+                                            .flatMap(e-> e.getSkills().stream())
+                                                    .distinct().toList();
+
+        // Count employees per skill mean how many employees not java
+        Map<String,Long> empCountBySkills = employees.stream().flatMap(
+                e -> e.getSkills().stream().map(skill -> Map.entry(skill,employee))
+        ).collect(Collectors.groupingBy(Map.Entry::getKey,Collectors.counting()) );
+
+        //Q12. Convert a list of employees into a Map of name to salary. Handle duplicate names.
+        Map<String, Integer> empSalary = employees.stream()
+                .collect(Collectors.toMap(
+                        Employee::getName
+                        ,Employee::getSalary));
+
+        // With merge function for duplicate keys
+        //added duplicate employee with differ salary
+
+        List<Employee> employees2 = Arrays.asList(
+                new Employee("Amit", 120000, 25, "IT",
+                        Arrays.asList("Java", "Spring", "AWS")),
+                new Employee("Neha", 130000, 28, "HR",
+                        Arrays.asList("Recruitment", "Management", "Excel")),
+                new Employee("Amit", 190000, 25, "IT",
+                        Arrays.asList("Java", "Spring", "AWS"))
+
+        );
+        Map<String, Integer> empSalary2 = employees2.stream().collect(Collectors.toMap(
+                Employee::getName
+                ,Employee::getSalary
+                ,(OldSalary,NewSalary) -> NewSalary //if duplicate key then keep new salry
+        ));
+
+        //Max Salary per department
+        Map<String,Integer> maxSalByDep = employees2.stream().collect(Collectors.groupingBy(
+                Employee::getDepartment,Collectors.collectingAndThen(
+                        Collectors.maxBy(Comparator.comparingInt(Employee::getSalary))
+                        ,op -> op.map(Employee::getSalary).orElse(0)
+        )));
+
+        System.out.println(maxSalByDep);
     }
 }
