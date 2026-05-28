@@ -1,5 +1,7 @@
+import javax.swing.*;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class NewStreamApi {
@@ -139,6 +141,26 @@ public class NewStreamApi {
                         ,op -> op.map(Employee::getSalary).orElse(0)
         )));
 
-        System.out.println(maxSalByDep);
+
+        List<Integer> nums1 = Arrays.asList(1,3,3,4);
+
+        int sum = nums1.stream().mapToInt(n-> n).min().orElse(-1);
+        Predicate<Integer> evenP = (n) -> n%2==0;
+        List<Integer> evens = nums1.stream().filter(evenP).toList();
+
+        //
+        int high  = nums1.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+                        .entrySet().stream().filter(e -> e.getValue() > 1).map(Map.Entry::getKey).max(Integer::compareTo).orElse(0);
+
+        nums1.stream().sorted(Comparator.reverseOrder()).limit(3);
+
+        Map<Integer,Long> map = nums1.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+                .entrySet().stream().filter(e->e.getValue() > 1).collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue,(o,o1)->o));
+        System.out.println(map);
+
+
     }
+
+
+
 }
