@@ -23,4 +23,26 @@ public class Recursion {
         else
             return binarySearch(arr,target,mid+1,last);
     }
+
+    //Reverse a number
+    //1234 (need to take number ( digit-1 ) as args
+    public static int reverseNum(int num, int args){
+        if(num == 0)
+            return 0;
+        return (num%10)*(int)Math.pow(10,args) + reverseNum(num/10,args-1);
+
+    }
+
+    //count number of zeros in a number
+    public  static int countZaros(int n, int count){
+        if (n==0){
+            return count;
+        }
+        if(n%10 == 0)
+            ++count;
+        return countZaros(n/10,count);
+    }
+
+
+
 }
