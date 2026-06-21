@@ -43,6 +43,17 @@ public class Recursion {
         return countZaros(n/10,count);
     }
 
+  //Leetcode:- 1342. Number of Steps to Reduce a Number to Zero
+    public static int numberOfSteps(int num){
+
+        if(num == 0)
+            return 0;
+        if(num %2 == 0)
+            return 1 + numberOfSteps(num/2);
+        else
+            return 1 + numberOfSteps(num-1);
+    }
+
 
 
 }
