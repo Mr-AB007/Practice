@@ -54,6 +54,20 @@ public class Recursion {
             return 1 + numberOfSteps(num-1);
     }
 
+    //Array is sorted or not
 
+    public  static boolean sortedArray(int[] arr, int start){
+        if(arr.length == start+1)
+            return true;
+//        if(arr[start] > arr[start+1])
+//            return false;
+        return (arr[start] <= arr[start+1]) && sortedArray(arr,start+1);
+    }
+
+ public static int linearsearch(int[] arr, int index, int target){
+        if(index == arr.length)
+            return -1;
+        return arr[index] == target ? index : linearsearch(arr,index+1,target);
+ }
 
 }
